@@ -41,8 +41,8 @@ export default Component.extend({
   }),
 
   containmentContainer: computed('containment', function() {
-    if (get(this, 'containment')) {
-      let containmentElement = get(this, 'element').closest(`${get(this, 'containment')}`);
+    if (this.containment) {
+      let containmentElement = this.element.closest(`${this.containment}`);
 
       return new ScrollContainer(containmentElement, {
         containment: true,
@@ -63,7 +63,7 @@ export default Component.extend({
   init() {
     this._super(...arguments);
 
-    assert('tagName should not be empty', isEmpty(get(this, 'tagName')));
+    assert('tagName should not be empty', isEmpty(this.tagName));
 
     this._dragEventsManager = bind(this, this._dragEventsManager);
     this._onDrag = bind(this, this._onDrag);
@@ -77,7 +77,7 @@ export default Component.extend({
   didInsertElement() {
     this._super(...arguments);
 
-    let element = get(this, 'element')
+    let element = this.element
 
     // element.style['touch-action'] = 'none';
 
@@ -88,7 +88,7 @@ export default Component.extend({
   willDestroyElement() {
     this._super(...arguments);
 
-    let element = get(this, 'element')
+    let element = this.element
 
     element.removeEventListener('mousedown', this._onMouseDown);
     element.removeEventListener('dragOver', this._onDragover);
@@ -103,7 +103,7 @@ export default Component.extend({
   },
 
   _onMouseDown(ev) {
-    if (isEqual(ev.button, CONTEXTMENUKEYCODE) || get(this, 'isDisabled')) {
+    if (isEqual(ev.button, CONTEXTMENUKEYCODE) || this.isDisabled) {
       this._preventDefaultBehavior(ev);
       return;
     }
@@ -145,7 +145,7 @@ export default Component.extend({
   },
 
   _cloneDraggable() {
-    let sortableContainer = new SortableContainer(get(this, 'element'));
+    let sortableContainer = new SortableContainer(this.element);
     let cloneNode = sortableContainer.cloneNode;
 
     cloneNode.id = `${cloneNode.id}--clone`;
@@ -156,8 +156,8 @@ export default Component.extend({
     cloneNode.style.top = `${sortableContainer.grabbedAt.y}px`;
     cloneNode.style.zIndex = '9999';
 
-    get(this, 'documentWindow').classList.add('sortable-attached');
-    get(this, 'documentWindow').appendChild(cloneNode);
+    this.documentWindow.classList.add('sortable-attached');
+    this.documentWindow.appendChild(cloneNode);
 
     setProperties(this, {
       'sortManager.sortableContainer': sortableContainer,
@@ -181,11 +181,11 @@ export default Component.extend({
   _onDrag(ev) {
     this._preventDefaultBehavior(ev);
 
-    let sortableContainer = get(this, 'sortableContainer');
-    let element = get(this, 'element');
+    let sortableContainer = this.sortableContainer;
+    let element = this.element;
     let cloneNode = get(sortableContainer, 'cloneNode');
-    let activeSortPaneElement = get(this, 'activeSortPaneElement');
-    let containmentContainer = get(this, 'containmentContainer');
+    let activeSortPaneElement = this.activeSortPaneElement;
+    let containmentContainer = this.containmentContainer;
 
     element.style.display = 'none';
 
@@ -241,13 +241,13 @@ export default Component.extend({
   _onDrop() {
     this.sendAction('dragend');
 
-    get(this, 'documentWindow').classList.remove('sortable-attached');
-    get(this, 'documentWindow').removeChild(get(this, 'sortableContainer').cloneNode);
-    get(this, 'element').removeAttribute('style');
-    get(this, 'sortableContainer').stopDrag();
+    this.documentWindow.classList.remove('sortable-attached');
+    this.documentWindow.removeChild(this.sortableContainer.cloneNode);
+    this.element.removeAttribute('style');
+    this.sortableContainer.stopDrag();
 
-    if(get(this, 'currentSortPane')) {
-      get(this, 'currentSortPane').send('onDrop', get(this, 'element'));
+    if(this.currentSortPane) {
+      this.currentSortPane.send('onDrop', this.element);
     }
   },
 
@@ -256,16 +256,16 @@ export default Component.extend({
 
       set(this, 'sortManager.currentOverItem', this);
 
-      let element = get(this, 'element');
+      let element = this.element;
       let { pageY } = ev.detail;
       let { top } = element.getBoundingClientRect();
       let height = element.offsetHeight;
       let overOnTopHalf = (pageY - top) < (height / 2);
-      let currentOverIndex = get(this, 'position');
-      let sortManager = get(this, 'sortManager');
+      let currentOverIndex = this.position;
+      let sortManager = this.sortManager;
       let sourceList = get(sortManager, 'sourceList');
       let targetList = get(sortManager, 'targetList');
-      let sourceIndex = get(this, 'sourceIndex');
+      let sourceIndex = this.sourceIndex;
       let sortAdjuster = (isEqual(sourceList, targetList) && currentOverIndex > sourceIndex) ? 1 : 0;
       let targetIndex = (overOnTopHalf ? currentOverIndex : (currentOverIndex + 1)) - sortAdjuster;
 
