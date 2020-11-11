@@ -1,25 +1,25 @@
 <h1>Ember Sortables</h1>
 
 <div class="kanban-board">
-  <SortPane @group={{1}} @onDrop={{action "test"}} @items={{model.squadA}} as |sortable|>
+  <SortPane @group={{1}} @onDrop={{this.test}} @items={{this.model.squadA}} as |sortable|>
     <sortable.item as |item|>
       {{item.content}}
     </sortable.item>
   </SortPane>
 
-  <SortPane @group={{1}} @containment=".kanban-board" @items={{model.squadB}} as |sortable|>
+  <SortPane @group={{1}} @containment=".kanban-board" @items={{this.model.squadB}} as |sortable|>
     <sortable.item as |item|>
       {{item.content}}
     </sortable.item>
   </SortPane>
 
-  <SortPane @group={{2}} @isDisabled={{true}} @containment=".kanban-board" @items={{model.squadC}} as |sortable|>
+  <SortPane @group={{2}} @isDisabled={{true}} @containment=".kanban-board" @items={{this.model.squadC}} as |sortable|>
     <sortable.item as |item|>
       {{item.content}}
     </sortable.item>
   </SortPane>
 
-  <SortPane @group={{2}} @containment=".kanban-board" @items={{model.squadD}} as |sortable|>
+  <SortPane @group={{2}} @containment=".kanban-board" @items={{this.model.squadD}} as |sortable|>
     <sortable.item as |item|>
       {{item.content}}
     </sortable.item>
