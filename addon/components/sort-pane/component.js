@@ -2,7 +2,13 @@ import Component from '@ember/component';
 import layout from './template';
 import { inject } from '@ember/service';
 import { isEqual, isEmpty } from '@ember/utils';
-import { get, getProperties, set, setProperties, computed } from '@ember/object';
+import {
+  get,
+  getProperties,
+  set,
+  setProperties,
+  computed
+} from '@ember/object';
 import { reads, not } from '@ember/object/computed';
 // import { A } from '@ember/array';
 import { bind } from '@ember/runloop';
