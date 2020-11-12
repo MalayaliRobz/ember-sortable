@@ -17,11 +17,7 @@ const SCROLL_ANIMATION_ID = '_dndContainmentScroll';
 
 export default class SortableItemComponent extends Component {
 
-  // classNames: ['sortable'],
-  // attributeBindings: ['position', 'sortable', 'isDisabled:disabled'],
-  // classNameBindings: ['isDragingOver:dragging-over', 'isDisabled:disabled'],
   sortable = true
-  isDisabled = false
 	
 	@service sortManager;
 
@@ -105,7 +101,7 @@ export default class SortableItemComponent extends Component {
   }
 
   _onMouseDown(ev) {
-    if (isEqual(ev.button, CONTEXTMENUKEYCODE) || this.isDisabled) {
+    if (isEqual(ev.button, CONTEXTMENUKEYCODE) || this.args.isDisabled) {
       this._preventDefaultBehavior(ev);
       return;
     }
@@ -263,7 +259,7 @@ export default class SortableItemComponent extends Component {
       let { top } = element.getBoundingClientRect();
       let height = element.offsetHeight;
       let overOnTopHalf = (pageY - top) < (height / 2);
-      let currentOverIndex = this.position;
+      let currentOverIndex = this.args.position;
       let sortManager = this.sortManager;
       let sourceList = get(sortManager, 'sourceList');
       let targetList = get(sortManager, 'targetList');

@@ -192,10 +192,6 @@ export default class SortPaneComponent extends Component {
     sourceList.insertAt(sourceIndex, draggedItem);
   }
   
-  // onDrop() {
-  //   return true;
-  // }
-  
   @action
   onDragStart(item, sourceIndex) {
     let sortManager = this.sortManager;
@@ -239,7 +235,7 @@ export default class SortPaneComponent extends Component {
     this.applyChanges(draggedItem, sourceList, sourceIndex, targetList, targetIndex);
   
     let dropAction = new Promise((resolve) => {
-      resolve(this.onDrop(draggedItem, sourceList, sourceIndex, targetList, targetIndex, draggedElement));
+      this.args.onDrop ? resolve(this.args.onDrop(draggedItem, sourceList, sourceIndex, targetList, targetIndex, draggedElement)) : resolve();
     });
   
     set(this, 'dropActionInFlight', true);

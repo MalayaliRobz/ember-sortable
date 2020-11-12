@@ -8,9 +8,9 @@ export default class ApplicationController extends Controller {
   test() {
     let deferred = defer();
 
-    setTimeout(() => {
-      deferred.reject(true);
-    }, 3000);
+    // setTimeout(() => {
+    //   deferred.reject(true);
+    // }, 3000);
 
     return deferred.promise;
   }
