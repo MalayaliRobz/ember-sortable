@@ -2,7 +2,8 @@
     sort-pane={{if this.sortPane true}}
     disabled={{if @isDisabled true}}
     {{did-insert this.registerListener}}
-    {{will-destroy this.unregisterListener}}>
+    {{will-destroy this.unregisterListener}}
+    ...attributes>
   {{#each this.collection as |item idx|}}
     {{#if (and this.isActiveSortPane (eq this.currentOverIndex idx) this.overOnTopHalf)}}
       <SortPlaceholder @style={{this.placeholderStyles}} />
